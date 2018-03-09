@@ -3,15 +3,16 @@
 #include <wctype.h>
 #include <stdlib.h>
 
-#define BYTES 0
+#define BYTES -1
 #define CHARS 1
+#define NONE 0
 
 #define IN 1
 #define OUT 0
 
 int main(int argc, char **argv)
 {
-    int SYMBOLS = BYTES, WORDS = 0, LINES = 0;
+    int SYMBOLS = BYTES, WORDS = 1, LINES = 1;
     int files = 0, offset = 1;
     FILE **file;
     int *symbols, *words, *lines;
@@ -20,6 +21,9 @@ int main(int argc, char **argv)
     {
         if (argv[1][0] == '-')
         {
+            SYMBOLS = NONE;
+            WORDS = 0;
+            LINES = 0;
             offset++;
             char *counter = argv[1];
             while (*counter++)
@@ -86,7 +90,7 @@ int main(int argc, char **argv)
     }
     for (int i = 0; i < files; i++)
     {
-        file[i] = fopen(argv[i + offset], SYMBOLS == CHARS ? "r" : "rb");
+        file[i] = fopen(argv[i + offset], SYMBOLS == BYTES ? "rb" : "r");
         if (!file[i])
         {
             printf("Unable to open file:\n%s\n", argv[i + offset]);
@@ -182,7 +186,10 @@ int main(int argc, char **argv)
     for (int i = 0; i < files; i++)
     {
         printf("File: %s\n", (argc == offset) ? "stdin" : argv[i + offset]);
-        printf("Symbols: %6d\t", symbols[i]);
+        if (SYMBOLS)
+        {
+            printf("%s: %6d\t", (SYMBOLS == CHARS) ? "Characters" : "Bytes", symbols[i]);
+        }
         if (WORDS)
         {
             printf("Words: %6d\t", words[i]);
@@ -199,7 +206,10 @@ int main(int argc, char **argv)
     free(lines);
 
     printf("Total:\n");
-    printf("Symbols: %6d\t", symbols_total);
+    if (SYMBOLS)
+    {
+        printf("%s: %6d\t", (SYMBOLS == CHARS) ? "Characters" : "Bytes", symbols_total);
+    }
     if (WORDS)
     {
         printf("Words: %6d\t", words_total);
