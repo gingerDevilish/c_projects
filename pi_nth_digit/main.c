@@ -30,9 +30,14 @@ node *prime_factors(long n, long double k)
         n = n / 2;
     }
     info = (prime_info *)malloc(sizeof(prime_info));
+    
+    
     info->prime = 2;
+    
     info->quantity = count;
+    
     append(&head, (void *)info);
+    
     for (int i = 3; i <= k; i += 2)
     {
         int count = 0;
