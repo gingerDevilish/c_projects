@@ -8,7 +8,7 @@ int N_ZERO = 2;
 
 typedef struct _prime_info
 {
-    long prime;
+long prime;
     long quantity;
 } prime_info;
 
@@ -18,7 +18,7 @@ typedef struct _prime_info
 node *prime_factors(long n, long double k)
 {
     node *head = NULL;
-    prime_info *info = NULL;
+prime_info *info = NULL;
     if (!k)
     {
         k = sqrtl(n);
@@ -26,13 +26,18 @@ node *prime_factors(long n, long double k)
     int count = 0;
     while ((n & 1) == 0)
     {
-        count++;
+count++;
         n = n / 2;
     }
     info = (prime_info *)malloc(sizeof(prime_info));
+    
+    
     info->prime = 2;
+    
     info->quantity = count;
-    append(&head, (void *)info);
+    
+            append(&head, (void *)info);
+    
     for (int i = 3; i <= k; i += 2)
     {
         int count = 0;
