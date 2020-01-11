@@ -36,7 +36,7 @@ count++;
     
     info->quantity = count;
     
-    append(&head, (void *)info);
+            append(&head, (void *)info);
     
     for (int i = 3; i <= k; i += 2)
     {
