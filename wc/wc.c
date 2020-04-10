@@ -123,8 +123,12 @@ int main(int argc, char **argv)
         {
             while ((c = fgetwc(file[i])) != WEOF)
             {
+                
+                
                 symbols[i]++;
                 symbols_total++;
+                
+                
                 if (iswspace(c))
                 {
                     if (state == IN)
